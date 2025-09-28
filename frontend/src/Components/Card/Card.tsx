@@ -1,33 +1,43 @@
-import React, { SyntheticEvent } from 'react'
-import './Card.css'
-import { JSX } from 'react/jsx-runtime'
-import { CompanySearch } from '../../company'
-import AddPortfolio from '../Portfolio/AddPortfolio/AddPortfolio'
+import React, { SyntheticEvent } from "react";
+import "./Card.css";
+import { JSX } from "react/jsx-runtime";
+import { CompanySearch } from "../../company";
+import AddPortfolio from "../Portfolio/AddPortfolio/AddPortfolio";
+import { Link } from "react-router-dom";
 
-interface Props  {
-  id : string
+interface Props {
+  id: string;
   searchResult: CompanySearch;
-  onPortFolioCreate: (e: SyntheticEvent) => void;
+  onPortfolioCreate: (e: SyntheticEvent) => void;
 }
 
-const Card : React.FC<Props> = ({id, searchResult, onPortFolioCreate}: Props)  : JSX.Element=> {
+const Card: React.FC<Props> = ({
+  id,
+  searchResult,
+  onPortfolioCreate,
+}: Props): JSX.Element => {
   return (
-  <div key={id} id={id} className = "card" >
     <div
-        className="details" >
-            <h2>{searchResult.name} ({searchResult.symbol})
-            </h2> 
-            <p>{searchResult.currency}</p>
-    </div>
-    <p className= "info"> 
+      className="flex flex-col items-center justify-between w-full p-6 bg-slate-100 rounded-lg md:flex-row"
+      key={id}
+      id={id}
+    >
+      <Link
+        to={`/company/${searchResult.symbol}/company-profile`}
+        className="font-bold text-center text-black md:text-left"
+      >
+        {searchResult.name} ({searchResult.symbol})
+      </Link>
+      <p className="text-black">{searchResult.currency}</p>
+      <p className="font-bold text-black">
         {searchResult.exchangeFullName} - {searchResult.exchange}
-       
-    </p>
-
-    <AddPortfolio onPortfolioCreate={onPortFolioCreate} symbol={searchResult.symbol}  />
-    
+      </p>
+      <AddPortfolio
+        onPortfolioCreate={onPortfolioCreate}
+        symbol={searchResult.symbol}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;
